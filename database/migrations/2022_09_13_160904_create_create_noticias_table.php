@@ -13,18 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('create_noticias', function (Blueprint $table) {
+        Schema::create('noticias', function (Blueprint $table) {
             
             $table->id();
-
             $table->string('titulo');
             $table->text('copete');
             $table->text('descripcion');
-            $table->dateTime('date');
             $table->tinyInteger('estado');
             $table->string('imagen');
-
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

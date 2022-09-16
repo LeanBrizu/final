@@ -13,7 +13,7 @@ class CreateNoticia extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,11 @@ class CreateNoticia extends FormRequest
     public function rules()
     {
         return [
-            //
+            'titulo'=> 'required',
+            //'copete'=> 'required',
+            'descripcion'=>'required',
+          //'imagen'=> 'mimes:jpg,jpeg,png,bmp,gif,svg,webp', 
+            'imagen'=> 'image'
         ];
     }
 }

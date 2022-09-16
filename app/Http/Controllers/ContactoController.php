@@ -4,17 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateContacto;
-use App\Models\create_contacto;
+use App\Models\Contacto;
 
-class CreateContactoController extends Controller
+class ContactoController extends Controller
 {
-    public function index(){
-        $contacto = create_contacto::all();
+    public function mostrarContactos(){
+        $contacto = Contacto::all();
         return response()->json($contacto);
     }
 
-    public function store(CreateContacto $request){
-     $contacto = create_contacto::create($request->all());
+    public function guardarContacto(CreateContacto $request){
+     $contacto = Contacto::create($request->all());
      return response()-> json([
         "estado" => true,
         "mensaje"=>"Su formulario ha sido enviado, gracias por comunicarte",
