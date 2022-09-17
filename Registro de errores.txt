@@ -1,0 +1,24 @@
+-- OBTENIDO AL LIMPIAR REGISTROS DE TELESCOPE --
+2022-09-13 23:19:15 ................................................................................. ~ 2s
+   WARN  [Tue.  
+
+
+   ErrorException 
+
+  Undefined array key 1
+
+  at C:\xampp\htdocs\laravel2\vendor\laravel\framework\src\Illuminate\Foundation\Console\ServeCommand.php:289 
+    285▕     protected function getDateFromLine($line)
+    286▕     {
+    287▕         preg_match('/^\[([^\]]+)\]/', $line, $matches);
+    288▕
+  ➜ 289▕         return Carbon::createFromFormat('D M d H:i:s Y', $matches[1]);
+    290▕     }
+    291▕
+    293▕      * Get the request port from the given PHP server output.
+
+  1   C:\xampp\htdocs\laravel2\vendor\laravel\framework\src\Illuminate\Foundation\Console\ServeCommand.php:289      Illuminate\Foundation\Bootstrap\HandleExceptions::Illuminate\Foundation\Bootstrap\{closure}("Undefined array key 1", "C:\xampp\htdocs\laravel2\vendor\laravel\framework\src\Illuminate\Foundation\Console\ServeCommand.php")
+
+  2   C:\xampp\htdocs\laravel2\vendor\laravel\framework\src\Illuminate\Foundation\Console\ServeCommand.php:239      Illuminate\Foundation\Console\ServeCommand::getDateFromLine(" Sep 13 23:19:26 2022] 127.0.0.1:59179 Accepted")
+
+<!--Fin error-->
