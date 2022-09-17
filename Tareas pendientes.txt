@@ -1,6 +1,7 @@
 Consultas:
 - Consultar si será necesario un campo de 'estado' de las noticias, que indique su estado activo/inactivo.
 - Consultar por la eliminación definitiva del copete.
+- Proponer incorporar el envío a un e-mail de los contactos que son enviados a la página.
 
 
 Correcciones a hacer:
