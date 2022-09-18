@@ -8,23 +8,28 @@ use App\Http\Controllers\LoginController;
 
 
 
-Route::post('/admin', [LoginController::class, 'ingreso']);
-Route::middleware('auth:sanctum')->get('/admin', function (Request $request) {
- 
-});
+Route::post('/admin', [LoginController::class, 'ingreso']);                    //Login del admin 
 
-
-Route::controller(ContactoController::class) ->group(function(){
-    Route::post('/contacto','guardarContacto');
-    Route::get('/contacto','mostrarContacto');
-});
-Route::controller(NoticiaController::class) ->group(function(){
-    Route::get('/noticia','mostrarNoticias');
-    Route::get('/noticia/{id}','mostrar');
-    Route::post('/noticia','guardarNoticia');
-    Route::put('/noticia/{id}','actualizar');
-    Route::post('/noticia/cambiarimagen/{id}', 'cambiarImagen');
-    Route::delete('/noticia/{id}','enviaraPapelera');
-    Route::get('/noticia/mostrar/papelera','verPapelera');
-    Route::delete('/noticia/eliminar/{id}','borrar');
+Route::middleware('auth:sanctum')->group( function ()  {                       //Panel del admin
+    Route::controller(ContactoController::class) ->group(function(){
+        Route::get('/admin/contacto','mostrarContactos');
     });
+    Route::controller(NoticiaController::class) ->group(function(){         
+        Route::get('/admin/noticia','mostrarNoticias');
+        Route::get('/admin/noticia/{id}','mostrar');              
+        Route::post('/admin/noticia','guardarNoticia');
+        Route::put('/admin/noticia/{id}','actualizar');
+        Route::post('/admin/noticia/cambiarimagen/{id}', 'cambiarImagen');
+        Route::delete('/admin/noticia/{id}','enviaraPapelera');
+        Route::get('/admin/noticia/mostrar/papelera','verPapelera');
+        Route::delete('/admin/noticia/eliminar/{id}','borrar');
+    });
+});
+
+//Rutas no protegidas.
+//Rutas del modelo Contacto.
+Route::post('/inicio',[ContactoController::class, 'guardarContacto']);
+
+//Rutas del modelo Noticia.
+Route::get('/inicio',[NoticiaController::class, 'verNoticias']); //Noticias "activas" (Pueden ser vistas públicamente).
+

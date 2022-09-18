@@ -20,12 +20,12 @@ class LoginController extends Controller
                 "estado"  => true,
                 "mensaje" => "Bienvenido admin.",
                 "success" => $success
-            ]);
+            ], 200);
         }else{
             return response()-> json([
                 "estado"  => false,
                 "mensaje" =>"No autorizado.",
-            ]);
+            ], 401);
         } 
     }
 }

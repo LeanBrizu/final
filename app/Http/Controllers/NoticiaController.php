@@ -8,25 +8,51 @@ use Illuminate\Http\Request;
 
 class NoticiaController extends Controller
 {
-    public function mostrarNoticias()
+    public function verNoticias()
     {
-        $noticia = Noticia::all();
-        return response()->json($noticia);
+        $noticias = Noticia::where('estado', 1)->get();
+        if (is_null($noticias)){
+            return response()->json([
+                "estado"  => false,
+                "mensaje" => "No hay noticias activas para mostrar."
+            ], 404);
+        }
+        return response()->json([
+            "estado" => true,
+            "noticias"  => $noticias], 200);
     }
 
-    public function mostrar($id)
+    //Desde aquí, los métodos del panel de admin.
+    protected function mostrarNoticias()
+    {
+        $noticias = Noticia::all();
+        if (is_null($noticias)){
+            return response()->json([
+                "estado"  => false,
+                "mensaje" => "No hay noticias para mostrar."
+            ], 404);
+        }
+        return response()->json([
+            "estado" => true,
+            "noticias"  => $noticias], 200);
+    }
+
+    protected function mostrar($id)
     {
         $noticia = Noticia::find($id);
         if (is_null($noticia)){
           return response()->json([
                 "estado" => false,
-                "mensaje"=>"Advertencia: Esta noticia ha sido descartada, o no existe."
-          ]);
+                "mensaje"=>"Noticia no encontrada."
+          ], 404);
         }
-        return response()->json($noticia);
+        return response()->json([
+            "estado"  => true,
+            "noticia" => $noticia,
+        ], 200);
     }
 
-    public function guardarNoticia(CreateNoticia $request){
+    protected function guardarNoticia(CreateNoticia $request){
 
         $validated = $request->validated();
         $noticia = new Noticia();
@@ -38,24 +64,24 @@ class NoticiaController extends Controller
         if ($request->file('imagen')){
             $file = $request->file('imagen');
             $filename = date('YmdHi').$file->getClientOriginalName();
-            $file -> move(public_path('/img'), $filename);
+            $file -> move(protected_path('/img'), $filename);
             $url = env("APP_URL").'/img/'.$filename;
             $noticia->imagen= $url;
         }
         if ($noticia->save()) {
             return response()-> json([
                 "estado" => true,
-                "mensaje"=>"Su noticia ha sido creada",
-                "noticia"=>$noticia,]);
+                "mensaje"=>"La noticia ha sido creada",
+                "noticia"=>$noticia,], 201);
         }else {
             return response()-> json([
             "estado" => false,
-            "mensaje"=> "Su noticia no fue creada",
-            "noticia"=> $noticia,]);
+            "mensaje"=> "Error. Noticia no creada.",
+            "noticia"=> $noticia,], 400);
         }
 
     }
-    public function actualizar(CreateNoticia $request, $id)
+    protected function actualizar(CreateNoticia $request, $id)
     {
         $noticia = Noticia::find($id);
         $noticia->titulo =  $request->get('titulo');
@@ -66,7 +92,7 @@ class NoticiaController extends Controller
         // if ($request->file('imagen')){
         //     $file = $request->file('imagen');
         //     $filename = date('YmdHi').$file->getClientOriginalName();
-        //     $file -> move(public_path('/img'), $filename);
+        //     $file -> move(protected_path('/img'), $filename);
         //     $url = env("APP_URL").'/img/'.$filename;
         //     $noticia->imagen= $url;
         // }
@@ -75,33 +101,40 @@ class NoticiaController extends Controller
             return response()-> json([
                 "estado" => true,
                 "mensaje"=>"Noticia editada exitósamente.",
-                "noticia"=>$noticia,]);
+                "noticia"=>$noticia,], 201);
         }else {
             return response()-> json([
             "estado" => false,
-            "mensaje"=> "Ha ocurrido un problema.",
-            "noticia"=> $noticia,]);
+            "mensaje"=> "Error. La noticia no pudo ser editada.",
+            "noticia"=> $noticia,], 400);
         }
     }
 
-    public function cambiarImagen(Request $request, $id)
+    protected function cambiarImagen(Request $request, $id)
     {
 
         $noticia = Noticia::find($id);
         if ($request->file('imagen')){
             $file = $request->file('imagen');
             $filename = date('YmdHi').$file->getClientOriginalName();
-            $file -> move(public_path('/img'), $filename);
+            $file -> move(protected_path('/img'), $filename);
             $url = env("APP_URL").'/img/'.$filename;
             $noticia->imagen= $url;
         }
-        $noticia->save();
-
-        return response()->json(["estado" => true,
-        "mensaje"=>"La imagen ha sido cambiada."]);
+        if ($noticia->save()) {
+            return response()-> json([
+                "estado"  => true,
+                "mensaje" =>"Imagen subida exitósamente.",
+                "noticia" =>$noticia,], 201);
+        }else {
+            return response()-> json([
+            "estado"  => false,
+            "mensaje" => "Error. La imagen no pudo guardarse.",
+            "noticia" => $noticia,], 400);
+        }
     }
 
-    public function enviaraPapelera($id)
+    protected function enviaraPapelera($id)
     {
         $noticia = Noticia::find($id);
         $noticia->delete(); 
@@ -109,27 +142,27 @@ class NoticiaController extends Controller
         return response()-> json([
             "estado" => true,
             "mensaje"=> "Noticia enviada a la papelera.",
-            "noticia"=> $noticia,]);
+            "noticia"=> $noticia,], 200);
     } 
 
-    public function verPapelera()
+    protected function verPapelera()
     {   
         $noticias = Noticia::onlyTrashed()->get();
         if (count($noticias)==0) {
             return response()-> json([
                 "estado" => false,
                 "mensaje"=>"No hay noticias en la papelera.",
-                ]);
+                ], 404);
         } else {
             return response()-> json([
-                "estado" => true,
-                "Noticias"=>$noticias
-                ]);
+                "estado"   => true,
+                "Noticias" =>$noticias
+                ], 200);
         }   
 
     }
 
-    public function borrar($id)//Borrado definitivo.
+    protected function borrar($id)          //Borrado definitivo.
     {
         $noticia = Noticia::withTrashed()->where('id', $id)->forceDelete(); ;
         
@@ -137,6 +170,6 @@ class NoticiaController extends Controller
         return response()-> json([
           "estado" => true,
           "mensaje"=>"La noticia ha sido eliminada.",
-          ]);
+          ], 202);
     }
 }

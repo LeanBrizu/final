@@ -13,6 +13,7 @@ Correcciones a hacer:
 - Revisar validación de imagen. Se han hecho pruebas y han quedado comentarios.
 - 'estado' puede ser NULL, reestablecer a que no pueda ser NULL. 
 - Algunas tablas en la base de datos, como password resets, podrían no ser necesarias.
+- Uso de Https en lugar de Http.
 
 Problemas:
 - Hay dificultad para el uso del método PUT con Postman para actualizar registros. Funciona solo como una inserción JSON sin incluir la imagen. SOLUCIÓN PROVISORIA: La edición de imagen funciona (método POST) con una ruta+id y método en el controlador aparte. 
