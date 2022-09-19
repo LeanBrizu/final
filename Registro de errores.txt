@@ -1,4 +1,4 @@
--- OBTENIDO AL LIMPIAR REGISTROS DE TELESCOPE --
+<!-- Error de obtención de horario del servidor. El sistema está teniendo problemas con la fecha. -->
 2022-09-13 23:19:15 ................................................................................. ~ 2s
    WARN  [Tue.  
 
@@ -21,4 +21,11 @@
 
   2   C:\xampp\htdocs\laravel2\vendor\laravel\framework\src\Illuminate\Foundation\Console\ServeCommand.php:239      Illuminate\Foundation\Console\ServeCommand::getDateFromLine(" Sep 13 23:19:26 2022] 127.0.0.1:59179 Accepted")
 
+<!--Fin error-->
+
+<!--Error de la actualización de noticias con el método PUT-->
+- (RESUELTO) Hay dificultad para el uso del método PUT con Postman para actualizar registros. Funciona colocando _method PUT en el formulario, seleccionando el método POST. Además, fue necesario modificar que la dirección de la imagen sea pública en lugar de protegida, de la siguiente manera:
+ $file -> move(public_path('/img'), $filename); <!--Funcional-->
+ $file -> move(protected_path('/img'), $filename); Obtengo el siguiente error:
+Error: Call to undefined function App\Http\Controllers\protected_path() in file C:\xampp\htdocs\Hotel_cerro\app\Http\Controllers\NoticiaController.php on line 95
 <!--Fin error-->

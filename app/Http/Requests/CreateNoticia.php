@@ -25,10 +25,10 @@ class CreateNoticia extends FormRequest
     {
         return [
             'titulo'=> 'required',
-            //'copete'=> 'required',
+            'copete'=> 'required',
             'descripcion'=>'required',
           //'imagen'=> 'mimes:jpg,jpeg,png,bmp,gif,svg,webp', 
-            'imagen'=> 'image'
+            'imagen'=> 'image|max:15360'
         ];
     }
 }

@@ -64,7 +64,7 @@ class NoticiaController extends Controller
         if ($request->file('imagen')){
             $file = $request->file('imagen');
             $filename = date('YmdHi').$file->getClientOriginalName();
-            $file -> move(protected_path('/img'), $filename);
+            $file -> move(public_path('/img'), $filename);
             $url = env("APP_URL").'/img/'.$filename;
             $noticia->imagen= $url;
         }
@@ -88,14 +88,13 @@ class NoticiaController extends Controller
         $noticia->copete = $request->get('copete');
         $noticia->descripcion = $request->get('descripcion');
         $noticia->estado = $request->get('estado');
-        //Subida de la imagen. No puedo hacerlo funcionar con el método PUT
-        // if ($request->file('imagen')){
-        //     $file = $request->file('imagen');
-        //     $filename = date('YmdHi').$file->getClientOriginalName();
-        //     $file -> move(protected_path('/img'), $filename);
-        //     $url = env("APP_URL").'/img/'.$filename;
-        //     $noticia->imagen= $url;
-        // }
+        if ($request->file('imagen')){
+            $file = $request->file('imagen');
+            $filename = date('YmdHi').$file->getClientOriginalName();
+            $file -> move(public_path('/img'), $filename);
+            $url = env("APP_URL").'/img/'.$filename;
+            $noticia->imagen= $url;
+        }
  
         if ($noticia->save()) {
             return response()-> json([
@@ -117,7 +116,7 @@ class NoticiaController extends Controller
         if ($request->file('imagen')){
             $file = $request->file('imagen');
             $filename = date('YmdHi').$file->getClientOriginalName();
-            $file -> move(protected_path('/img'), $filename);
+            $file -> move(public_path('/img'), $filename);
             $url = env("APP_URL").'/img/'.$filename;
             $noticia->imagen= $url;
         }

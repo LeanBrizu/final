@@ -1,0 +1,20 @@
+Consultas:
+- Consultar si será necesario un campo de 'estado' de las noticias, que indique su estado activo/inactivo.
+- Consultar por la eliminación definitiva del copete.
+- Proponer incorporar el envío a un e-mail de los contactos que son enviados a la página.
+
+
+Correcciones a hacer:
+- (Consultar)Si no habrá necesidad de copete en las noticias, eliminar campo en el archivo migrable, la tabla creada, en el controlador y el validador.
+- La función de borrado definitivo no será requerida. Deshabilitar método en el controlador y ruta pertinente.
+- Agregar códigos de estado a los mensajes de JSON devueltos a Frontend.
+- Base de datos, tabla noticia: 'imágenes' con url dinámica (Cuidado).
+- Revisar validación de imagen. Se han hecho pruebas y han quedado comentarios.
+- 'estado' puede ser NULL, reestablecer a que no pueda ser NULL. 
+- Algunas tablas en la base de datos, como password resets, podrían no ser necesarias.
+- Uso de Https en lugar de Http.
+
+Problemas:
+- Hay dificultad para el uso del método PUT con Postman para actualizar registros. Funciona solo como una inserción JSON sin incluir la imagen. SOLUCIÓN PROVISORIA: La edición de imagen funciona (método POST) con una ruta+id y método en el controlador aparte. 
+
+
