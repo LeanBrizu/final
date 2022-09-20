@@ -28,13 +28,13 @@ class ContactoController extends Controller
      $contacto = Contacto::create($request->all());
      if (is_null($contacto)){
         return response()-> json([
-            "estado" => false,
-            "mensaje"=>"Error. El contacto no se ha guardado.",
+            "estado"  => false,
+            "mensaje" =>"Error. El contacto no se ha guardado.",
             "contacto"=>$contacto], 400);
      }
      return response()-> json([
-        "estado" => true,
-        "mensaje"=>"Contacto registrado exitósamente.",
+        "estado"  => true,
+        "mensaje" =>"Contacto registrado exitósamente.",
         "contacto"=>$contacto], 201);
     }
 
