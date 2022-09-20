@@ -23,7 +23,7 @@ class NoticiaController extends Controller
     }
 
     //Desde aquí, los métodos del panel de admin.
-    protected function mostrarNoticias()
+    public function mostrarNoticias()
     {
         $noticias = Noticia::all();
         if (is_null($noticias)){
@@ -37,7 +37,7 @@ class NoticiaController extends Controller
             "noticias"  => $noticias], 200);
     }
 
-    protected function mostrar($id)
+    public function mostrar($id)
     {
         $noticia = Noticia::find($id);
         if (is_null($noticia)){
@@ -52,7 +52,7 @@ class NoticiaController extends Controller
         ], 200);
     }
 
-    protected function guardarNoticia(CreateNoticia $request){
+    public function guardarNoticia(CreateNoticia $request){
 
         $validated = $request->validated();
         $noticia = new Noticia();
@@ -81,7 +81,7 @@ class NoticiaController extends Controller
         }
 
     }
-    protected function actualizar(CreateNoticia $request, $id)
+    public function actualizar(CreateNoticia $request, $id)
     {
         $noticia = Noticia::find($id);
         $noticia->titulo =  $request->get('titulo');
@@ -109,7 +109,7 @@ class NoticiaController extends Controller
         }
     }
 
-    protected function cambiarImagen(Request $request, $id)
+    public function cambiarImagen(Request $request, $id)
     {
 
         $noticia = Noticia::find($id);
@@ -133,7 +133,7 @@ class NoticiaController extends Controller
         }
     }
 
-    protected function enviaraPapelera($id)
+    public function enviaraPapelera($id)
     {
         $noticia = Noticia::find($id);
         $noticia->delete(); 
@@ -144,7 +144,7 @@ class NoticiaController extends Controller
             "noticia"=> $noticia,], 200);
     } 
 
-    protected function verPapelera()
+    public function verPapelera()
     {   
         $noticias = Noticia::onlyTrashed()->get();
         if (count($noticias)==0) {
@@ -161,7 +161,7 @@ class NoticiaController extends Controller
 
     }
 
-    protected function borrar($id)          //Borrado definitivo.
+    public function borrar($id)          //Borrado definitivo.
     {
         $noticia = Noticia::withTrashed()->where('id', $id)->forceDelete(); ;
         

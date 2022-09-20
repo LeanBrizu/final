@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\CreateContacto;
 use App\Models\Contacto;
 
+
 class ContactoController extends Controller
 {
     public function mostrarContactos(){
@@ -23,7 +24,7 @@ class ContactoController extends Controller
          "contactos" =>  $contactos], 200);
     }
 
-    protected function guardarContacto(CreateContacto $request){
+    public function guardarContacto(CreateContacto $request){
      $contacto = Contacto::create($request->all());
      if (is_null($contacto)){
         return response()-> json([
@@ -37,7 +38,7 @@ class ContactoController extends Controller
         "contacto"=>$contacto], 201);
     }
 
-    protected function borrarContacto($id){   //Borrado definitivo.
+    public function borrarContacto($id){   //Borrado definitivo.
       
         $contacto = Contacto::find($id);
         if (is_null($contacto)){

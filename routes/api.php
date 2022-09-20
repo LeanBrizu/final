@@ -14,16 +14,7 @@ Route::middleware('auth:sanctum')->group( function ()  {                       /
     Route::controller(ContactoController::class) ->group(function(){
         Route::get('/admin/contacto','mostrarContactos');
     });
-    Route::controller(NoticiaController::class) ->group(function(){         
-        Route::get('/admin/noticia','mostrarNoticias');
-        Route::get('/admin/noticia/{id}','mostrar');              
-        Route::post('/admin/noticia','guardarNoticia');
-        Route::put('/admin/noticia/{id}','actualizar');
-        Route::post('/admin/noticia/cambiarimagen/{id}', 'cambiarImagen');
-        Route::delete('/admin/noticia/{id}','enviaraPapelera');
-        Route::get('/admin/noticia/mostrar/papelera','verPapelera');
-        Route::delete('/admin/noticia/eliminar/{id}','borrar');
-    });
+
 });
 
 //Rutas no protegidas.
@@ -33,3 +24,13 @@ Route::post('/inicio',[ContactoController::class, 'guardarContacto']);
 //Rutas del modelo Noticia.
 Route::get('/inicio',[NoticiaController::class, 'verNoticias']); //Noticias "activas" (Pueden ser vistas públicamente).
 
+Route::controller(NoticiaController::class) ->group(function(){         
+    Route::get('/admin/noticia','mostrarNoticias');
+    Route::get('/admin/noticia/{id}','mostrar');              
+    Route::post('/admin/noticia','guardarNoticia');
+    Route::put('/admin/noticia/{id}','actualizar');
+    Route::post('/admin/noticia/cambiarimagen/{id}', 'cambiarImagen');
+    Route::delete('/admin/noticia/{id}','enviaraPapelera');
+    Route::get('/admin/noticia/mostrar/papelera','verPapelera');
+    Route::delete('/admin/noticia/eliminar/{id}','borrar');
+});
