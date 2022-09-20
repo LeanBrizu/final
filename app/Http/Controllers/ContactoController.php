@@ -23,21 +23,21 @@ class ContactoController extends Controller
          "contactos" =>  $contactos], 200);
     }
 
-    protected function guardarContacto(CreateContacto $request){
+    public function guardarContacto(CreateContacto $request){
      $contacto = Contacto::create($request->all());
      if (is_null($contacto)){
         return response()-> json([
-            "estado" => false,
-            "mensaje"=>"Error. El contacto no se ha guardado.",
+            "estado"  => false,
+            "mensaje" =>"Error. El contacto no se ha guardado.",
             "contacto"=>$contacto], 400);
      }
      return response()-> json([
-        "estado" => true,
-        "mensaje"=>"Contacto registrado exitósamente.",
+        "estado"  => true,
+        "mensaje" =>"Contacto registrado exitósamente.",
         "contacto"=>$contacto], 201);
     }
 
-    protected function borrarContacto($id){   //Borrado definitivo.
+    public function borrarContacto($id){   //Borrado definitivo.
       
         $contacto = Contacto::find($id);
         if (is_null($contacto)){

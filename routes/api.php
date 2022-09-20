@@ -13,7 +13,6 @@ Route::post('/admin', [LoginController::class, 'ingreso']);                    /
 Route::middleware('auth:sanctum')->group( function ()  {                       //Panel del admin
     Route::controller(ContactoController::class) ->group(function(){
         Route::get('/admin/contacto','mostrarContactos');
-    });
     Route::controller(NoticiaController::class) ->group(function(){         
         Route::get('/admin/noticia','mostrarNoticias');
         Route::get('/admin/noticia/{id}','mostrar');              
@@ -24,6 +23,8 @@ Route::middleware('auth:sanctum')->group( function ()  {                       /
         Route::get('/admin/noticia/mostrar/papelera','verPapelera');
         Route::delete('/admin/noticia/eliminar/{id}','borrar');
     });
+    });
+
 });
 
 //Rutas no protegidas.
