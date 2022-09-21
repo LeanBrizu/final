@@ -113,6 +113,12 @@ class NoticiaController extends Controller
     {
 
         $noticia = Noticia::find($id);
+        if(is_null($noticia)){
+            return response()-> json([
+                "estado" => false,
+                "mensaje"=>"Error. Noticia no encontrada.",
+                ], 404);
+        }
         if ($request->file('imagen')){
             $file = $request->file('imagen');
             $filename = date('YmdHi').$file->getClientOriginalName();
@@ -129,20 +135,27 @@ class NoticiaController extends Controller
             return response()-> json([
             "estado"  => false,
             "mensaje" => "Error. La imagen no pudo guardarse.",
-            "noticia" => $noticia,], 400);
+            "noticia" => $noticia], 400);
         }
     }
 
     public function enviaraPapelera($id)
     {
         $noticia = Noticia::find($id);
-        $noticia->delete(); 
- 
-        return response()-> json([
-            "estado" => true,
-            "mensaje"=> "Noticia enviada a la papelera.",
-            "noticia"=> $noticia,], 200);
-    } 
+       
+        if(is_null($noticia)){
+            return response()-> json([
+                "estado" => false,
+                "mensaje"=>"Error. Noticia no encontrada.",
+                ], 404);
+        }else{
+            $noticia->delete(); 
+            return response()-> json([
+              "estado" => true,
+              "mensaje"=>"La noticia ha sido enviada a la papelera.",
+              ], 202);
+         } 
+    }
 
     public function verPapelera()
     {   
@@ -163,12 +176,20 @@ class NoticiaController extends Controller
 
     public function borrar($id)          //Borrado definitivo.
     {
-        $noticia = Noticia::withTrashed()->where('id', $id)->forceDelete(); ;
-        
+       $noticia = Noticia::find($id);
 
-        return response()-> json([
-          "estado" => true,
-          "mensaje"=>"La noticia ha sido eliminada.",
-          ], 202);
+        if(is_null($noticia)){
+            return response()-> json([
+                "estado" => false,
+                "mensaje"=>"Error. Noticia no encontrada.",
+                ], 404);
+        }else{
+            $noticia = Noticia::withTrashed()->where('id', $id)->forceDelete();
+            return response()-> json([
+              "estado" => true,
+              "mensaje"=>"La noticia ha sido eliminada.",
+              ], 202);
+        }
+
     }
 }
