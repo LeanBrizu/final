@@ -14,7 +14,6 @@ return new class extends Migration
     public function up()
     {
         Schema::create('noticias', function (Blueprint $table) {
-            
             $table->id();
             $table->string('titulo');
             $table->text('copete');
