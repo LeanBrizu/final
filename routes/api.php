@@ -28,7 +28,7 @@ Route::middleware('auth:sanctum')->group( function ()  {                       /
 
 //Rutas no protegidas.
 //Rutas del modelo Contacto.
-Route::post('/inicio',[ContactoController::class, 'guardarContacto']);
+Route::post('/guardarContacto',[ContactoController::class, 'guardarContacto']);
 
 //Rutas del modelo Noticia.
 Route::get('/inicio',[NoticiaController::class, 'verNoticias']); //Noticias "activas" (Pueden ser vistas públicamente).
