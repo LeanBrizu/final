@@ -24,11 +24,11 @@ class CreateContacto extends FormRequest
     public function rules()
     {
         return [
-            'nombre'=> 'required|alpha',
-            'apellido'=> 'required|alpha',
-            'telefono'=> 'max:17',
-            'email' => 'required|email:rfc,dns',
-            'mensaje'=> 'max:500'    
+            'nombre'   => 'required|alpha',
+            'apellido' => 'required|alpha',
+            'telefono' => 'max:17',
+            'email'    => 'required|email:rfc,dns',
+            'mensaje'  => 'max:500'
         ];
     }
 }
